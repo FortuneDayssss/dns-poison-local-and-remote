@@ -108,7 +108,8 @@ void send_dns_response(char * buffer, int pkt_size)		        //ATTEMPT #2
 	for(int i=0; i<65535; i++)
 		{unsigned short id = htons(i);
 		 memcpy(ip_resp + 28, &id, 2);
-		 sendto(sock, ip_resp, n_resp, 0, (struct sockaddr *)&dest_info, sizeof(dest_info));}	 
+		 send_raw_packet(buffer, pkt_size);
+		 //sendto(sock, ip_resp, n_resp, 0, (struct sockaddr *)&dest_info, sizeof(dest_info));}	 
 }
 
 
