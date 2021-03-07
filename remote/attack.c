@@ -39,9 +39,10 @@ int main()
             exit(1);
     }
     unsigned char ip_req[MAX_FILE_SIZE];
+    // n_req -> Number of bytes read into ip_req from f_req
     int n_req = fread(ip_req, 1, MAX_FILE_SIZE, f_req);
 
-    // Load theh first DNS response packet from file
+    // Load the first DNS response packet from file
     FILE * f_resp = fopen("ip_resp.bin", "rb");
     if (!f_resp) {
             perror("Cant open 'in resp.bin'");
