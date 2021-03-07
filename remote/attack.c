@@ -10,15 +10,15 @@
 /* IP Header */
 struct ipheader {
 	unsigned char 		iph_ihl:4,		// IP header length
-				  		iph_ver:4;		// IP version
+				iph_ver:4;		// IP version
 	unsigned char		iph_tos; 		// Types of service
-	unsigned short int  iph_len;		// IP Packet length (data + header)
+	unsigned short int  	iph_len;		// IP Packet length (data + header)
 	unsigned short int	iph_ident;		// Identification
 	unsigned short int	iph_flag:3, 	// Fragmentation flags
-						iph_offset:13;	// Flags offset
+				iph_offset:13;	// Flags offset
 	unsigned char		iph_ttl;		// time to live
 	unsigned char		iph_protocol;	// protocol type
-	unsigned short int  iph_chksum;		// IP datagram checksum
+	unsigned short int  	iph_chksum;		// IP datagram checksum
 	struct 	in_addr		iph_sourceip;	// src IP address
 	struct 	in_addr		iph_destip;		// dst IP address
 };
