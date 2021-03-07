@@ -15,12 +15,12 @@ struct ipheader {
 	unsigned short int  iph_len;		// IP Packet length (data + header)
 	unsigned short int	iph_ident;		// Identification
 	unsigned short int	iph_flag:3, 	// Fragmentation flags
-						iph_offset:13;	//Flags offset
+						iph_offset:13;	// Flags offset
 	unsigned char		iph_ttl;		// time to live
 	unsigned char		iph_protocol;	// protocol type
 	unsigned short int  iph_chksum;		// IP datagram checksum
-	struct 	in_addr		iph_sourceip;	//src IP address
-	struct 	in_addr		iph_destip;		//dst IP address
+	struct 	in_addr		iph_sourceip;	// src IP address
+	struct 	in_addr		iph_destip;		// dst IP address
 };
 
 void send_raw_packet(char * buffer, int pkt_size);
@@ -60,8 +60,8 @@ int main()
 				
 		/* Step 1. Send  a DNS request to the targeted local DNS server
 				   This will trigger it to send out DNS queries */
-		memcpy(ip_req+41, name, 5);		//Modify the name in the question field (ofset=41)
-		send_dns_request(ip_req, n_req);// send the DNS request
+		memcpy(ip_req+41, name, 5);		// Modify the name in the question field (ofset=41)
+		send_dns_request(ip_req, n_req);// Send the DNS request
 		printf("attempt #%ld. request is [%.5s.example.com]\n, transaction ID is: [%hu]\n", ++i, name, transaction_id);
 		
 		
