@@ -93,7 +93,6 @@ void send_dns_request(char * buffer, int pkt_size)				//ATTEMPT #2
 {
 	//memcpy(buffer+29, name, 5);
 	send_raw_packet(buffer, pkt_size);
-	//sendto(sock, ip_req, n_req, 0, (struct sockaddr *)&dest_info, sizeof(dest_info));
 }
 
 
@@ -106,7 +105,7 @@ void send_dns_response(char * buffer, int pkt_size)		        //ATTEMPT #2
 	//memcpy(buffer+40, name, 5);
 	
 	send_raw_packet(buffer, pkt_size);
-	//sendto(sock, ip_resp, n_resp, 0, (struct sockaddr *)&dest_info, sizeof(dest_info));}	 
+		 
 }
 
 
@@ -137,5 +136,4 @@ void send_raw_packet(char * buffer, int pkt_size)
   close(sock);
 }
 
-//######### send dns request #######
 
