@@ -55,9 +55,9 @@ int main()
 	while(1) {
 		unsigned short transaction_id = 0;
 		
-		// Generate a random name w/ length 5
-		char name[5];
-		for (int k=0; k<5; k++)	name[k] = a[rand()%26];
+		//$$$$$ STUDENT TASK $$$$$
+		// Generate a random name w/ length 5 AND store it in a 'name char array'
+
 		
 				
 
@@ -89,27 +89,26 @@ int main()
 /* Use for sending DNS request.
  * Add arguments to the function definition if needed.
  * */
-void send_dns_request(char * buffer, int pkt_size)				//ATTEMPT #2
-{
-	//memcpy(buffer+29, name, 5);
-	send_raw_packet(buffer, pkt_size);
+void send_dns_request(char * buffer, int pkt_size){			
+	//$$$$$ STUDENT TASK $$$$$
+	// Implement a function that sends the DNS request
+	//Hint: What do you need to send data from an application to the transport layer?
 }
 
 
 /* Use for sending forged DNS response.
  * Add arguments to the function definition if needed.
  * */
-void send_dns_response(char * buffer, int pkt_size)		        //ATTEMPT #2
+void send_dns_response(char * buffer, int pkt_size)		        
 {
-	//memcpy(buffer+29, name, 5);
-	//memcpy(buffer+40, name, 5);
-	
-	send_raw_packet(buffer, pkt_size);
+	//$$$$$ STUDENT TASK $$$$$
+	// Implement a function that sends the DNS request
+	//Hint: What do you need to send data from an application to the transport layer? This will be very similar to sending a request.
 		 
 }
 
 
-/* Send the raw packet out 
+/* Send the raw packet  
  *    buffer: to contain the entire IP packet, with everything filled out.
  *    pkt_size: the size of the buffer.
  * */
